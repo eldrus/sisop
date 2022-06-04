@@ -100,8 +100,12 @@ int main(int argc, char *argv[]){
             close(new_socket);
         }
         send(new_socket, auth_response, sizeof(auth_response),0);
-    } else {
-        strcpy(auth_username, "root");
+    } if(root)
+        strcpy(username, "root");
+    
+
+    char database_used[1024];
+    database_used[0]='\0';
     }
     //main programm
 
@@ -109,7 +113,7 @@ int main(int argc, char *argv[]){
         // char request[1024] = {0}, response[1024] = {0};
         // valread = read(new_socket, buffer, 1024);
         // printf("%s", request);
-        valread = read(new_socket, buffer, 1024);
+        valread = read(new_socket, request, 1024);
         printf("%s\n", buffer);
         strcpy(response,"query success\n");
         send(new_socket, response, strlen(response), 0);
@@ -376,7 +380,7 @@ int main(int argc, char *argv[]){
         }
         
         if (insert_into){
-            //INSERT INTO table1 (‘value1’, 2, ‘value3’, 4);
+            //INSERT INTO table1 (â€˜value1â€™, 2, â€˜value3â€™, 4);
             if(database_used[0]=='\0')
                 sprintf(response, "NO DATABASE IN USE!!!\n");
             else{
@@ -524,10 +528,9 @@ int main(int argc, char *argv[]){
             break;
     } 
     
-    }
+    
     
 
     return 0;
 }
-
 
